@@ -36,7 +36,7 @@ export class MyRoom extends Room<MyRoomState> {
         // (client.sessionId is unique per connection!)
         this.state.players.set(client.sessionId, player);
         client.send("player_ready", {
-            character: "player.character",
+            character: player.character,
             position: {x: player.x, y: player.y, z: player.z}
         });
     }
