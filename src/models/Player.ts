@@ -7,6 +7,8 @@ export class Player extends Schema {
     @type("number") z: number;
 
     @type("string") character: string;
+    @type("string") session_id: string;
+    @type("boolean") ready: boolean = false;
 
     setAttributes (player_attributes: PlayerAttributes.PlayerAttributes) {
         this.character = player_attributes.character;

@@ -31,10 +31,12 @@ export class MyRoom extends Room<MyRoomState> {
         } else {
             player.setAttributes(PlayerAttributes.husband_options);
         }
+        player.session_id = client.sessionId;
 
         // place player in the map of players by its sessionId
         // (client.sessionId is unique per connection!)
         this.state.players.set(client.sessionId, player);
+        player.ready = true;
         client.send("player_ready", {
             character: player.character,
             position: {x: player.x, y: player.y, z: player.z}
