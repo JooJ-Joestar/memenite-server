@@ -15,7 +15,12 @@ export class MyRoom extends Room<MyRoomState> {
             player.x = data.x;
             player.y = data.y;
             player.z = data.z;
-            console.log('updatePosition');
+        });
+
+        this.onMessage("updateNickname", (client, data) => {
+            console.log("updateNickname");
+            const player = this.state.players.get(client.sessionId);
+            player.nickname = data.nickname;
         });
     }
 
@@ -33,7 +38,6 @@ export class MyRoom extends Room<MyRoomState> {
         } else {
             player.setAttributes(PlayerAttributes.husband_options);
         }
-        player.session_id = client.sessionId;
 
         // place player in the map of players by its sessionId
         // (client.sessionId is unique per connection!)

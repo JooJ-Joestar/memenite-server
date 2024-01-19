@@ -7,6 +7,7 @@ export class Player extends Schema {
     @type("number") z: number;
 
     @type("string") character: string;
+    @type("string") nickname: string = "Noname";
     @type("string") session_id: string;
     @type("boolean") ready: boolean = false;
 
