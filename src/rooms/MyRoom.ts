@@ -17,10 +17,17 @@ export class MyRoom extends Room<MyRoomState> {
             player.z = data.z;
         });
 
-        this.onMessage("updateNickname", (client, data) => {
-            console.log("updateNickname");
+        this.onMessage("update_nickname", (client, data) => {
+            console.log("update_nickname");
             const player = this.state.players.get(client.sessionId);
             player.nickname = data.nickname;
+
+            this.broadcast("nickname_updated", {
+                    sessionId: client.sessionId,
+                    nickname: player.nickname
+                },
+                {except: client}
+            );
         });
     }
 
