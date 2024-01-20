@@ -4,7 +4,7 @@ import { Player } from "../models/Player";
 import * as PlayerAttributes from "../types/PlayerAttributes";
 
 export class MyRoom extends Room<MyRoomState> {
-    maxClients = 12;
+    maxClients = 32;
     public qty_connected: number = 0;
 
     onCreate(options: any) {
@@ -61,6 +61,8 @@ export class MyRoom extends Room<MyRoomState> {
 
         this.state.players.delete(client.sessionId);
         this.qty_connected--;
+
+        this.broadcast("player_left", {sessionId: client.sessionId});
     }
 
     onDispose() {
