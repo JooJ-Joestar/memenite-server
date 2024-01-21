@@ -2,10 +2,26 @@ import { Room, Client } from "@colyseus/core";
 import { MyRoomState } from "./schema/MyRoomState";
 import { Player } from "../models/Player";
 import * as PlayerAttributes from "../types/PlayerAttributes";
+import { type } from "@colyseus/schema";
 
 export class MyRoom extends Room<MyRoomState> {
-    maxClients = 32;
+    static MAX_CLIENTS = 32;
+    static PHASE_TIMES = {
+        // 1: 10,
+        // 2: 60,
+        // 3: 15
+        1: 3,
+        2: 3,
+        3: 3
+    }
+
     public qty_connected: number = 0;
+
+    @type("number") timer: number = 0;
+    // 1: Load
+    // 2: Play
+    // 3: Results
+    @type("number") phase: number = 1;
 
     onCreate(options: any) {
         this.setState(new MyRoomState());
@@ -31,6 +47,23 @@ export class MyRoom extends Room<MyRoomState> {
                 {except: client}
             );
         });
+
+        this.phase = 1;
+        this.timer = MyRoom.PHASE_TIMES[this.phase];
+        this.executeTimer();
+    }
+
+    executeTimer (): any {
+        setTimeout(() => {
+            this.timer--;
+            if (this.timer == 0) {
+                this.phase = (this.phase % 3) + 1;
+                this.timer = MyRoom.PHASE_TIMES[this.phase];
+                console.log("Phase: " + this.phase);
+            }
+            console.log(this.timer);
+            this.executeTimer();
+        }, 1000);
     }
 
     onJoin(client: Client, options: any) {
