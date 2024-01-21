@@ -15,6 +15,8 @@ export class MyRoom extends Room<MyRoomState> {
             player.x = data.x;
             player.y = data.y;
             player.z = data.z;
+            player.x_movement = data.x_movement;
+            player.z_movement = data.z_movement;
         });
 
         this.onMessage("update_nickname", (client, data) => {
