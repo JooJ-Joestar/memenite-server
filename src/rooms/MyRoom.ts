@@ -16,6 +16,7 @@ export class MyRoom extends Room<MyRoomState> {
     }
 
     public qty_connected: number = 0;
+    public room_ready: boolean = false;
 
     @type("number") timer: number = 0;
     // 1: Load
@@ -25,6 +26,13 @@ export class MyRoom extends Room<MyRoomState> {
 
     onCreate(options: any) {
         this.setState(new MyRoomState());
+
+        if (this.room_ready === false) {
+            this.room_ready = true;
+            this.phase = 1;
+            this.timer = MyRoom.PHASE_TIMES[this.phase];
+            this.executeTimer();
+        }
 
         this.onMessage("updatePosition", (client, data) => {
             const player = this.state.players.get(client.sessionId);
@@ -47,13 +55,10 @@ export class MyRoom extends Room<MyRoomState> {
                 {except: client}
             );
         });
-
-        this.phase = 1;
-        this.timer = MyRoom.PHASE_TIMES[this.phase];
-        this.executeTimer();
     }
 
     executeTimer (): any {
+        if (this.room_ready === false) return;
         setTimeout(() => {
             this.timer--;
             if (this.timer == 0) {
@@ -64,6 +69,7 @@ export class MyRoom extends Room<MyRoomState> {
             console.log(this.timer);
             this.executeTimer();
         }, 1000);
+        this.broadcast("timer", {timer: this.timer, phase: this.phase});
     }
 
     onJoin(client: Client, options: any) {
@@ -98,6 +104,7 @@ export class MyRoom extends Room<MyRoomState> {
 
     onDispose() {
         console.log("room", this.roomId, "disposing...");
+        this.room_ready = false;
     }
 
 }
