@@ -64,6 +64,13 @@ export class MyRoom extends Room<MyRoomState> {
             if (this.timer == 0) {
                 this.phase = (this.phase % 3) + 1;
                 this.timer = MyRoom.PHASE_TIMES[this.phase];
+
+                // If first phase was activated again, respawn everyone.
+                if (this.phase === 1) {
+                    this.state.players.forEach(player => {
+                        player.respawn();
+                    });
+                }
                 console.log("Phase: " + this.phase);
             }
             console.log(this.timer);
