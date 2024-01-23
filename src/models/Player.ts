@@ -22,4 +22,9 @@ export class Player extends Schema {
         this.x_movement = 0;
         this.z_movement = 0;
     }
+
+    respawn () {
+        this.x = Math.round(Math.random()) * 3;
+        this.z = Math.round(Math.random()) * 3;
+    }
 }
