@@ -8,6 +8,9 @@ export class Player extends Schema {
     
     @type("number") x_movement: number;
     @type("number") z_movement: number;
+    
+    @type("number") kills: number;
+    @type("number") deaths: number;
 
     @type("string") character: string;
     @type("string") nickname: string = "Noname";
@@ -24,7 +27,7 @@ export class Player extends Schema {
     }
 
     respawn () {
-        this.x = Math.round(Math.random()) * 3;
-        this.z = Math.round(Math.random()) * 3;
+        this.x = 1 - Math.round(Math.random() * 3);
+        this.z = 1 - Math.round(Math.random() * 3);
     }
 }

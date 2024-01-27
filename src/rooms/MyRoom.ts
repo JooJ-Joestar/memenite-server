@@ -75,6 +75,10 @@ export class MyRoom extends Room<MyRoomState> {
         });
 
         this.onMessage("player_died", (client, data) => {
+            const victim = this.state.players.get(client.sessionId);
+            victim.deaths++;
+            const killer = this.state.players.get(data.killer);
+            killer.kills++;
             this.broadcast("player_died", {
                     sessionId: client.sessionId,
                     data: data
