@@ -57,15 +57,30 @@ export class MyRoom extends Room<MyRoomState> {
         });
 
         this.onMessage("player_fired", (client, data) => {
-            console.log("player_fired");
-            console.log(data);
+            this.broadcast("player_fired", {
+                    sessionId: client.sessionId,
+                    data: data
+                },
+                {except: client}
+            );
+        });
 
-            // this.broadcast("nickname_updated", {
-            //         sessionId: client.sessionId,
-            //         nickname: player.nickname
-            //     },
-            //     {except: client}
-            // );
+        this.onMessage("player_scored_hit", (client, data) => {
+            this.broadcast("player_scored_hit", {
+                    sessionId: client.sessionId,
+                    data: data
+                },
+                {except: client}
+            );
+        });
+
+        this.onMessage("player_died", (client, data) => {
+            this.broadcast("player_died", {
+                    sessionId: client.sessionId,
+                    data: data
+                },
+                {except: client}
+            );
         });
     }
 
@@ -85,7 +100,7 @@ export class MyRoom extends Room<MyRoomState> {
                 }
                 console.log("Phase: " + this.phase);
             }
-            console.log(this.timer);
+            // console.log(this.timer);
             this.executeTimer();
         }, 1000);
         this.broadcast("timer", {timer: this.timer, phase: this.phase});
