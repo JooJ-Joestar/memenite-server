@@ -10,8 +10,8 @@ export class MyRoom extends Room<MyRoomState> {
         // 1: 10,
         // 2: 60,
         // 3: 15
-        1: 3,
-        2: 3,
+        1: 1,
+        2: 999,
         3: 3
     }
 
