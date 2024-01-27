@@ -55,6 +55,18 @@ export class MyRoom extends Room<MyRoomState> {
                 {except: client}
             );
         });
+
+        this.onMessage("player_fired", (client, data) => {
+            console.log("player_fired");
+            console.log(data);
+
+            // this.broadcast("nickname_updated", {
+            //         sessionId: client.sessionId,
+            //         nickname: player.nickname
+            //     },
+            //     {except: client}
+            // );
+        });
     }
 
     executeTimer (): any {
