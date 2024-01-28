@@ -13,7 +13,7 @@ export class Player extends Schema {
     @type("number") deaths: number;
 
     @type("string") character: string;
-    @type("string") nickname: string = "Noname";
+    @type("string") nickname: string = "";
     @type("string") session_id: string;
     @type("boolean") ready: boolean = false;
 

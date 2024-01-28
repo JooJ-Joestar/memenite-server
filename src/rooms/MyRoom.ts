@@ -44,13 +44,15 @@ export class MyRoom extends Room<MyRoomState> {
         });
 
         this.onMessage("update_nickname", (client, data) => {
-            console.log("update_nickname");
+            console.log(client.sessionId + " updated nickname to " + data.nickname);
             const player = this.state.players.get(client.sessionId);
             player.nickname = data.nickname;
+            player.character = data.character;
 
             this.broadcast("nickname_updated", {
                     sessionId: client.sessionId,
-                    nickname: player.nickname
+                    nickname: player.nickname,
+                    character: player.character
                 },
                 {except: client}
             );
