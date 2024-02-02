@@ -11,7 +11,7 @@ export class MyRoom extends Room<MyRoomState> {
         // 2: 60,
         // 3: 15
         1: 1,
-        2: 999,
+        2: 99999,
         3: 3
     }
 
@@ -30,6 +30,7 @@ export class MyRoom extends Room<MyRoomState> {
         if (this.room_ready === false) {
             this.room_ready = true;
             this.phase = 1;
+            // @ts-ignore
             this.timer = MyRoom.PHASE_TIMES[this.phase];
             this.executeTimer();
         }
@@ -96,6 +97,7 @@ export class MyRoom extends Room<MyRoomState> {
             this.timer--;
             if (this.timer == 0) {
                 this.phase = (this.phase % 3) + 1;
+                // @ts-ignore
                 this.timer = MyRoom.PHASE_TIMES[this.phase];
 
                 // If first phase was activated again, respawn everyone.
